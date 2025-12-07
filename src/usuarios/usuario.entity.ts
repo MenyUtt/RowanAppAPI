@@ -40,8 +40,8 @@ export class Usuario {
   activo: boolean;
 
   // === NUEVOS CAMPOS PARA 2FA ===
-  @Column({ length: 6, nullable: true })
-  codigo_2fa: string;
+  @Column({ type: 'varchar', nullable: true }) 
+  codigo_2fa: string | null;
 
   @Column({ type: 'datetime', nullable: true })
   expiracion_2fa: Date;
