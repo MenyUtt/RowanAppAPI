@@ -40,11 +40,11 @@ export class Usuario {
   activo: boolean;
 
   // === NUEVOS CAMPOS PARA 2FA ===
-  @Column({ type: 'varchar', nullable: true }) 
-  codigo_2fa: string;
+  @Column({ name: 'es_2fa_habilitado', type: 'boolean', default: false })
+    esDosFactoresHabilitado: boolean;
 
-  @Column({ type: 'datetime', nullable: true })
-  expiracion_2fa: Date;
+  @Column({ name: 'codigo_2fa', type: 'varchar', length: 255, nullable: true }) 
+  codigo_2fa: string;
 
   @Column({ type: 'varchar', length: 255, nullable: true })
   fcm_token: string;

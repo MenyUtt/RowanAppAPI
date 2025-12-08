@@ -7,6 +7,7 @@ import { UsuariosModule } from 'src/usuarios/usuarios.module';
 import { JwtStrategy } from './jwt.strategy';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { HttpModule } from '@nestjs/axios'; // <--- IMPORTANTE
+import { TwoFactorAuthService } from './two-factor-auth.service';
 
 @Module({
   imports: [
@@ -25,7 +26,7 @@ import { HttpModule } from '@nestjs/axios'; // <--- IMPORTANTE
       }),
     }),
   ],
-  providers: [AuthService, JwtStrategy],
+  providers: [AuthService, JwtStrategy, TwoFactorAuthService],
   controllers: [AuthController],
 })
 export class AuthModule {}
