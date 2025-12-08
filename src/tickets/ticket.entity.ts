@@ -48,6 +48,8 @@ export class Ticket {
   @OneToMany(() => HistorialStatus, historial => historial.ticket)
   historialStatus: HistorialStatus[];
 
-  @OneToMany(() => Notificacion, notificacion => notificacion.ticket)
+  @OneToMany(() => Notificacion, notificacion => notificacion.ticket, {
+    onDelete: 'CASCADE'
+  })
   notificaciones: Notificacion[];
 }

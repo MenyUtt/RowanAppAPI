@@ -105,8 +105,10 @@ export class AuthService {
     if (new Date() > user.expiracion_2fa) {
       throw new UnauthorizedException('El código ha expirado');
     }
+    const storedCode = String(user.codigo_2fa).trim();
+    const inputCode = String(code).trim();
 
-    if (user.codigo_2fa !== code) {
+    if (storedCode !== inputCode) {
       throw new UnauthorizedException('Código incorrecto');
     }
 

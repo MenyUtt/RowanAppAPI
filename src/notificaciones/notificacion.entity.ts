@@ -23,7 +23,9 @@ export class Notificacion {
   @JoinColumn({ name: 'usuario_id' })
   usuario: Usuario;
 
-  @ManyToOne(() => Ticket, ticket => ticket.notificaciones)
+  @ManyToOne(() => Ticket, ticket => ticket.notificaciones, {
+    onDelete: 'CASCADE'
+  })
   @JoinColumn({ name: 'ticket_id' })
   ticket: Ticket;
 }
