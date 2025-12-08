@@ -18,11 +18,13 @@ export class AuthController {
   @ApiResponse({ status: 201, description: 'Credenciales válidas, se requiere 2FA' })
   @ApiResponse({ status: 401, description: 'Credenciales o Captcha inválidos' })
   async loginStep1(@Body() loginDto: LoginStep1Dto) {
-    // 1. Validar Captcha
+    
+    /* 1. Validar Captcha
     const isCaptchaValid = await this.authService.validateRecaptcha(loginDto.recaptchaToken);
     if (!isCaptchaValid) {
       throw new UnauthorizedException('Captcha inválido');
     }
+    */
 
     // 2. Validar Usuario y Contraseña
     const user = await this.authService.validateUser(

@@ -112,7 +112,7 @@ export class AuthService {
 
     // Limpiar el código usado
     await this.usuariosService.update(user.id, {
-      codigo_2fa: null, // @ts-ignore: typeorm maneja null si la columna lo permite
+      codigo_2fa: null as any, // @ts-ignore: typeorm maneja null si la columna lo permite
       expiracion_2fa: null // @ts-ignore
     });
 

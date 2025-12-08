@@ -24,7 +24,7 @@ import { TiposSistemaModule } from './tipos-sistema/tipos-sistema.module';
       username: process.env.DB_USER,
       password: process.env.DB_PASS,
       database: process.env.DB_NAME,
-      synchronize: false, // para desarrollo, NO producción
+      synchronize: true, // para desarrollo, NO producción
       autoLoadEntities: true, // importante para que cargue todas las entidades automáticamente
     }),
     UsuariosModule,
