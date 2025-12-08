@@ -28,19 +28,22 @@ export class UsuariosService {
     return usuario;
   }
 
-  async create(usuario: Partial<Usuario>): Promise<Usuario> {
+  async create(data: any): Promise<Usuario> {
     const salt = await bcrypt.genSalt(10);
-    if (!usuario.contrasena) {
-      throw new Error('La contraseña es obligatoria');
-    }
-    usuario.contrasena = await bcrypt.hash(usuario.contrasena, salt);
-    const usuarioConRol = {
-      ...usuario,
-      rol: { id: 5 } as any 
-    };
+    const hash = await bcrypt.hash(data.contrasena, salt);
 
-    const newUser = this.usuariosRepository.create(usuario);
-    return this.usuariosRepository.save(newUser);
+    // Mapeamos manualmente el rol_id que viene del front a la relación 'rol'
+    const nuevoUsuario = this.usuariosRepository.create({
+      nombre: data.nombre,
+      apellidos: data.apellidos,
+      correo: data.correo,
+      telefono: data.telefono,
+      contrasena: hash,
+      // Si viene rol_id úsalo, si no, pon el 5 por defecto como seguridad
+      rol: { id: data.rol_id || 5 } 
+    });
+
+    return this.usuariosRepository.save(nuevoUsuario);
   }
 
   async update(id: number, usuario: Partial<Usuario>): Promise<Usuario> {
