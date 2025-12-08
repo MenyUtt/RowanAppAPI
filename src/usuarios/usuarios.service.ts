@@ -34,6 +34,10 @@ export class UsuariosService {
       throw new Error('La contraseña es obligatoria');
     }
     usuario.contrasena = await bcrypt.hash(usuario.contrasena, salt);
+    const usuarioConRol = {
+      ...usuario,
+      rol: { id: 5 } as any 
+    };
 
     const newUser = this.usuariosRepository.create(usuario);
     return this.usuariosRepository.save(newUser);
