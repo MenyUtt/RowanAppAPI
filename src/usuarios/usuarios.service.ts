@@ -73,4 +73,13 @@ export class UsuariosService {
       relations: ['rol'],
     });
   }
+  async findStaff(): Promise<Usuario[]> {
+    return this.usuariosRepository.find({
+      where: [
+        { rol: { nombre: 'Administracion' } }, // Asegúrate que el nombre en BD sea exacto
+        { rol: { nombre: 'Coordinador' } }
+      ],
+      relations: ['rol'],
+    });
+  }
 }

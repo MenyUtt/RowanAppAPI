@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Put, Body, Param } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Body, Param } from '@nestjs/common';
 import { TicketsService } from './tickets.service';
 import { Ticket } from './ticket.entity';
 
@@ -19,5 +19,10 @@ export class TicketsController {
   @Put(':id')
   update(@Param('id') id: string, @Body() updateData: any): Promise<Ticket> {
     return this.ticketsService.update(+id, updateData);
+  }
+  
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.ticketsService.remove(+id);
   }
 }

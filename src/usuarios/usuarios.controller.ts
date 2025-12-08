@@ -43,6 +43,11 @@ export class UsuariosController {
     return this.usuariosService.update(id, updateUsuarioDto);
   }
 
+  @Put(':id/fcm-token')
+  async updateFcmToken(@Param('id') id: number, @Body('token') token: string) {
+  return this.usuariosService.update(id, { fcm_token: token } as any);
+  }
+
   @Delete(':id')
   @ApiOperation({ summary: 'Eliminar un usuario (Despues se desactivara por el momento lo extermina)' })
   remove(@Param('id') id: number) {

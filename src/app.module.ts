@@ -13,6 +13,7 @@ import { HistorialStatusModule } from './historial-status/historial-status.modul
 import { NotificacionesModule } from './notificaciones/notificaciones.module';
 import { TicketsModule } from './tickets/tickets.module';
 import { TiposSistemaModule } from './tipos-sistema/tipos-sistema.module';
+import { FirebaseModule } from './firebase/firebase.module';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { TiposSistemaModule } from './tipos-sistema/tipos-sistema.module';
     NotificacionesModule,
     TicketsModule,
     TiposSistemaModule,
+    FirebaseModule,
   ],
   controllers: [AppController],
   providers: [AppService],

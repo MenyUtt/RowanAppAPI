@@ -45,7 +45,9 @@ export class Usuario {
 
   @Column({ type: 'datetime', nullable: true })
   expiracion_2fa: Date;
-  //================================
+
+  @Column({ type: 'varchar', length: 255, nullable: true })
+  fcm_token: string;
 
   @ManyToOne(() => Rol, (rol) => rol.usuarios, { eager: true })
   @JoinColumn({ name: 'rol_id' })
