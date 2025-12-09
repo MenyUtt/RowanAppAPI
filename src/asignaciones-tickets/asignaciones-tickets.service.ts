@@ -30,4 +30,18 @@ export class AsignacionesTicketsService {
   remove(id: number): Promise<any> {
     return this.asignacionRepo.delete(id);
   }
+
+    async assign(ticketId: number, empleadoId: number): Promise<AsignacionTicket> {
+    // Try to find existing assignment for the ticket
+    const existing = await this.asignacionRepo.findOne({ where: { ticket: { id: ticketId } }, relations: ['ticket', 'empleado', 'jefe'] });
+    if (existing) {
+      // update empleado relation (partial object with id is OK)
+      existing.empleado = { id: empleadoId } as any;
+      return this.asignacionRepo.save(existing);
+    }
+
+    // create new assignment
+    const newAsign = this.asignacionRepo.create({ ticket: { id: ticketId } as any, empleado: { id: empleadoId } as any });
+    return this.asignacionRepo.save(newAsign);
+  }
 }

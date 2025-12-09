@@ -42,4 +42,16 @@ export class AsignacionesTicketsController {
   remove(@Param('id') id: number) {
     return this.asignacionesService.remove(id);
   }
+
+  @Post('asignar')
+    @ApiOperation({ summary: 'Asignar un ticket a un empleado (crear o actualizar asignación)' })
+    async asignar(@Body() body: any): Promise<AsignacionTicket> {
+      // support either { ticket_id, empleado_id } or { ticket: { id }, empleado: { id } }
+      const ticketId = body.ticket_id || (body.ticket && body.ticket.id) || (body.ticketId || body.ticket?.ticketId);
+      const empleadoId = body.empleado_id || (body.empleado && body.empleado.id) || (body.empleadoId || body.empleado?.usuarioId);
+      if (!ticketId || !empleadoId) {
+        throw new Error('ticket_id and empleado_id are required');
+      }
+      return this.asignacionesService.assign(Number(ticketId), Number(empleadoId));
+    }
 }

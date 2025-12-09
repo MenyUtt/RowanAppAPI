@@ -8,11 +8,19 @@ import { JwtStrategy } from './jwt.strategy';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { HttpModule } from '@nestjs/axios'; // <--- IMPORTANTE
 import { TwoFactorAuthService } from './two-factor-auth.service';
+import { TotpService } from './totp.service';
+import { AuthTotpController } from './auth.totp.controller';
+import { TotpEphemeralService } from './totp.ephemeral.service';
+import { AuthTotpEphemeralController } from './auth.totp.ephemeral.controller';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { UsuarioTotp } from 'src/usuarios/usuario-totp.entity';
+import { AuthCaptchaController } from './auth.captcha.controller';
 
 @Module({
   imports: [
     UsuariosModule,
     PassportModule,
+    TypeOrmModule.forFeature([UsuarioTotp]),
     ConfigModule,
     HttpModule, // <--- AGREGARLO AQUÍ
     JwtModule.registerAsync({
@@ -26,7 +34,7 @@ import { TwoFactorAuthService } from './two-factor-auth.service';
       }),
     }),
   ],
-  providers: [AuthService, JwtStrategy, TwoFactorAuthService],
-  controllers: [AuthController],
+  providers: [AuthService, JwtStrategy, TwoFactorAuthService, TotpService, TotpEphemeralService],
+  controllers: [AuthController, AuthCaptchaController, AuthTotpController, AuthTotpEphemeralController],
 })
 export class AuthModule {}
