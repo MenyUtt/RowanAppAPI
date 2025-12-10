@@ -46,8 +46,28 @@ export class UsuariosService {
     return this.usuariosRepository.save(nuevoUsuario);
   }
 
-  async update(id: number, usuario: Partial<Usuario>): Promise<Usuario> {
-    await this.usuariosRepository.update(id, usuario);
+  async update(id: number, usuario: Partial<Usuario> | any): Promise<Usuario> {
+    // Handle rol_id coming from client (e.g. { rol_id: 3 }) which is not a direct property
+    // of the Usuario entity. Map it to the relation 'rol' and use save() to persist relations.
+    const { rol_id, ...rest } = usuario || {};
+
+    const existing = await this.usuariosRepository.findOne({ where: { id }, relations: ['rol'] });
+    if (!existing) {
+      throw new NotFoundException(`Usuario con ID ${id} no encontrado`);
+    }
+
+    // Apply scalar updates
+    if (rest && Object.keys(rest).length) {
+      Object.assign(existing, rest);
+    }
+
+    // If rol_id provided, set the relation properly
+    if (rol_id !== undefined && rol_id !== null) {
+      // assign minimal object so TypeORM updates relation (assumes rol entity exists)
+      (existing as any).rol = { id: Number(rol_id) } as any;
+    }
+
+    await this.usuariosRepository.save(existing);
     return this.findOne(id);
   }
 
