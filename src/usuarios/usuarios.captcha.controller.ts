@@ -12,7 +12,7 @@ export class UsuariosCaptchaController {
     private readonly httpService: HttpService,
   ) {}
 
-  private async validateRecaptcha(token: string): Promise<boolean> {
+  private async validateRecaptcha2(token: string): Promise<boolean> {
     const secret =
       this.configService.get<string>('RECAPTCHA_SECRET') || process.env.RECAPTCHA_SECRET;
     if (!secret) return false;
@@ -37,7 +37,7 @@ export class UsuariosCaptchaController {
       throw new BadRequestException('recaptchaToken requerido');
     }
 
-    const ok = await this.validateRecaptcha(recaptchaToken);
+    const ok = await this.validateRecaptcha2(recaptchaToken);
     if (!ok) {
       throw new BadRequestException('Captcha inválido');
     }
