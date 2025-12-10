@@ -14,6 +14,8 @@ import { NotificacionesModule } from './notificaciones/notificaciones.module';
 import { TicketsModule } from './tickets/tickets.module';
 import { TiposSistemaModule } from './tipos-sistema/tipos-sistema.module';
 import { FirebaseModule } from './firebase/firebase.module';
+import { join } from 'path';
+import { ServeStaticModule } from '@nestjs/serve-static';
 
 @Module({
   imports: [
@@ -27,6 +29,11 @@ import { FirebaseModule } from './firebase/firebase.module';
       database: process.env.DB_NAME,
       synchronize: true, // para desarrollo, NO producción
       autoLoadEntities: true, // importante para que cargue todas las entidades automáticamente
+    }),
+    // SERVIR FRONT-END
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'web'), // la carpeta web está en la raíz del proyecto
+      exclude: ['/api*'], // rutas de API no se servirán como archivos estáticos
     }),
     UsuariosModule,
     RolesModule,
