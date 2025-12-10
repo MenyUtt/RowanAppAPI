@@ -350,9 +350,12 @@
             }
           }
         }catch(e){ /* ignore parse errors */ }
-        if(!usuarioId) usuarioId = 0;
+        if (!usuarioId) usuarioId = undefined;
 
-        const histBody = { ticket_id: Number(ticketId), status_anterior: prevStatus || undefined, status_nuevo: newStatus, usuario_id: Number(usuarioId) };
+        const histBody = { ticket_id: Number(ticketId), status_anterior: prevStatus || undefined, status_nuevo: newStatus };
+        if (usuarioId !== undefined && usuarioId !== null) {
+          histBody.usuario_id = Number(usuarioId);
+        }
         await fetch(API_BASE + '/historial-status', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(histBody) });
 
         alert('Status actualizado');

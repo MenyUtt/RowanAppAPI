@@ -39,7 +39,7 @@ export class UsuariosCaptchaController {
 
     const ok = await this.validateRecaptcha2(recaptchaToken);
     if (!ok) {
-      throw new BadRequestException('Captcha inválido');
+      throw new BadRequestException('Captcha inválido papu');
     }
 
     // Construir payload esperado por UsuariosService.create
