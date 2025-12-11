@@ -52,6 +52,12 @@ export class TicketsService {
 
   // === CREAR TICKET (Notificar a Staff) ===
   async create(ticketData: CreateTicketDto): Promise<Ticket> {
+      // Ensure codigo_ticket exists — generate a backend-side code if client didn't provide one
+      if (!ticketData.codigo_ticket) {
+        const ts = Date.now().toString().slice(-6);
+        const rnd = Math.floor(Math.random() * 900 + 100); // 3-digit random
+        ticketData.codigo_ticket = `TCK-${ts}-${rnd}`;
+      }
       const ticket = this.ticketsRepository.create({
         ...ticketData,
         tipoSistema: { id: ticketData.tipo_sistema_id },
